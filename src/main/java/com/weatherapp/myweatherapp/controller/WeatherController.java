@@ -22,8 +22,27 @@ public class WeatherController {
     return ResponseEntity.ok(ci);
   }
 
-  // TODO: given two city names, compare the length of the daylight hours and return the city with the longest day
+  // TODO: given two city names, compare the length of the daylight hours and
+  // return the city with the longest day
+  @GetMapping("/compare-daylight/{city1}/{city2}")
+  public ResponseEntity<String> compareDaylight(@PathVariable("city1") String city1,
+      @PathVariable("city2") String city2) {
+    try {
+      String result = weatherService.compareDaylightHours(city1, city2);
+      return ResponseEntity.ok(result);
+    } catch (Exception e) {
+      return ResponseEntity.badRequest().body("Error: " + e.getMessage());
+    }
+  }
 
   // TODO: given two city names, check which city its currently raining in
-
+  @GetMapping("/check-rain/{city1}/{city2}")
+  public ResponseEntity<String> checkRain(@PathVariable("city1") String city1, @PathVariable("city2") String city2) {
+    try {
+      String result = weatherService.checkRainingCities(city1, city2);
+      return ResponseEntity.ok(result);
+    } catch (Exception e) {
+      return ResponseEntity.badRequest().body("Error: " + e.getMessage());
+    }
+  }
 }
